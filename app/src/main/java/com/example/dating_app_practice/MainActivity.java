@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     SwipeFlingAdapterView flingContainer;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
