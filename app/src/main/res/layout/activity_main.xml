@@ -11,24 +11,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SignOut"
-            android:onClick="logoutUser" />
+            android:background="#9C27B0"
+            android:onClick="logoutUser"
+            android:text="SignOut" />
+
         <Button
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"
-            android:onClick="goToSettings" />
+            android:background="#60126E"
+            android:onClick="goToSettings"
+            android:text="Settings" />
     </LinearLayout>
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
-        android:background="#ffeee9e2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:rotation_degrees="15.5"
         tools:context=".MyActivity"/>
 
