@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,16 +20,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
+
+    private cards cards_data[];
+    private arrayAdapter arrayAdapter;
+
+
     private int i;
 
     SwipeFlingAdapterView flingContainer;
 
     private FirebaseAuth mAuth;
+
+    ListView listView;
+    List<cards> rowItems;
+
+
 
 
     @Override
@@ -43,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        al = new ArrayList<>();
+//        al = new ArrayList<>();
 //        al.add("php");
 //        al.add("c");
 //        al.add("python");
@@ -53,7 +64,12 @@ public class MainActivity extends AppCompatActivity {
 //        al.add("css");
 //        al.add("javascript");
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+      //  arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+
+
+
+        rowItems = new ArrayList<cards>();
+        arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
 
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -63,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                al.remove(0);
+                //al.remove(0);
+                rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -169,7 +186,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.exists()){
-                    al.add(dataSnapshot.child("name").getValue().toString());
+                   // al.add(dataSnapshot.child("name").getValue().toString());
+                    cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString());
+                    rowItems.add(item);
                     arrayAdapter.notifyDataSetChanged();
                 }
             }
