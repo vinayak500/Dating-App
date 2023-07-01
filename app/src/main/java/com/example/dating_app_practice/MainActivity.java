@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     private int i;
 
+    private DatabaseReference usersDb;
+
     SwipeFlingAdapterView flingContainer;
 
     private FirebaseAuth mAuth;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     List<cards> rowItems;
 
+    private String currentUId;
 
 
 
@@ -52,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
         checkUserSex();
 
+        usersDb = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        currentUId = mAuth.getCurrentUser().getUid();
 
 //        al = new ArrayList<>();
 //        al.add("php");
@@ -89,11 +94,17 @@ public class MainActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
+                cards obj = (cards) dataObject;
+                String userId = obj.getUserId();
+                usersDb.child(oppositeUserSex).child(userId).child("connections").child("nope").child(currentUId).setValue(true);
                 Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
+                cards obj = (cards) dataObject;
+                String userId = obj.getUserId();
+                usersDb.child(oppositeUserSex).child(userId).child("connections").child("yeps").child(currentUId).setValue(true);
                 Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
             }
 
@@ -185,7 +196,8 @@ public class MainActivity extends AppCompatActivity {
         oppositeSexDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) &&
+                        !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) ){
                    // al.add(dataSnapshot.child("name").getValue().toString());
                     cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString());
                     rowItems.add(item);
