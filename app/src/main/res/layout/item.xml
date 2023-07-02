@@ -21,18 +21,18 @@
         android:id="@+id/cardView">
         <FrameLayout
             android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="500dp">
+            android:layout_width="400dp"
+            android:layout_height="600dp">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="match_parent"
                 android:id="@+id/image"
                 android:scaleType="centerCrop"
                 />
             <TextView
                 android:id="@+id/name"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:gravity="center|bottom"
                 tools:text="hello"
                 android:textSize="30sp"
